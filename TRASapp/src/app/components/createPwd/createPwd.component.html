@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="card card-container">
+    
+      <div *ngIf="failureMessage" class="error"> {{failureMessage}}</div>
+      <div *ngIf="successMessage" class="success"> {{successMessage}}</div>
+    <div *ngIf="redirect">Click here to <a [routerLink]="['/login']" class="btn btn-link">Login</a> </div>
+    <h3> Create your own password for TRAS here!!</h3> 
+
+    <form name="form" (ngSubmit)="f.form.valid && createNewPwd()" #f="ngForm" novalidate>
+      
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <label for="username">Email Address</label>
+        <input type="email" readonly class="form-control" id="username" name="username" [(ngModel)]="user.username" #username="ngModel"
+          required />
+      </div>
+
+       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !tempPassword.valid }">
+        <label for="tempPassword">Temporary Password</label>
+        <input type="password" class="form-control" name="tempPassword" id="tempPassword" [(ngModel)]="user.tempPassword" #tempPassword="ngModel" required/>
+        <div *ngIf="f.submitted && !tempPassword.valid" class="help-block">*Temporary Password is required</div>
+      </div>  
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !newPassword.valid }">
+        <label for="newPassword">New Password</label>
+        <input type="password" class="form-control" name="newPassword" id="newPassword" [(ngModel)]="user.password" #newPassword="ngModel"
+          required minlength="4" />
+        <div *ngIf="f.submitted && !newPassword.valid" class="help-block">
+          <div *ngIf="newPassword.errors.required">
+            *New Password is required.
+          </div>
+          <div *ngIf="newPassword.errors.minlength">
+            * New Password must be at least 4 characters long.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
+        <label for="confirmPassword">Confirm NewPassword</label>
+        <input type="password" Equalvalidate="newPassword" class="form-control"  name="confirmPassword" id="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required/>       
+        <div *ngIf="f.submitted && !confirmPassword.valid" class="help-block">
+            <div *ngIf="confirmPassword.errors.required">
+                *Confirm NewPassword is required.
+            </div>
+            <div [hidden]="confirmPassword.valid || confirmPassword.pristine">
+                *Confirm NewPassword should match with New Password.
+            </div>         
+        </div>
+      </div> 
+
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create Password</button>
+      <button [routerLink]="['/home']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Cancel</button>
+    </form>
+  </div><!-- /card-container -->
+</div><!-- /container -->

@@ -1,0 +1,88 @@
+<html>
+<img id="profile-img" class="profile-img-card" src="https://braunweiss.net/wp-content/uploads/2017/04/cropped-cropped-BraunWeiss-logo_256.png"
+/>
+<div>
+    <p>  <span *ngIf="!help" class = "helper"> *Select the value from WeekendOf drop down to enter the details</span></p>
+
+  <label for="WeekendOf"> WeekendOf</label>
+  <select (change)="selectChangeHandler($event)">
+            <option *ngFor="let wk of weekendList" [value]="wk">{{ wk }}</option>
+            <!--<option value="Select">Select</option>-->
+    </select> 
+ 
+  <p> <span class="field"> Emp Name:</span><b>{{empName}}</b> <span class="field"> Team:</span><b>{{team}}</b></p>
+  <p> <span class="field"> Company:</span><b> {{company}}</b> <span class="field"> Status:</span><b> {{status}}</b></p>
+
+  <p> <span class="field"> Week End Of:</span><b> {{selectedWeekend}}</b></p>
+
+</div>
+
+<form name="form-timesheet" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+   
+    
+    <!--<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+      <label for="username">Username</label>
+      <input type="email" class="form-control" emailDomainValidator id="username" name="username" [(ngModel)]="user.username" #username="ngModel"
+        required />
+      <div *ngIf="f.submitted && !username.valid" class="help-block">Please enter your BraunWeiss email</div>
+    </div> -->
+    <table border=1>
+        <tr>
+          <th>Day of Week</th>
+          <th>WBS Code</th>
+          <th>Regular Hrs</th>
+          <th>Overtime Hrs</th>
+          <th>Total Hrs</th>
+      
+        </tr>
+        <tbody>
+          <tr *ngFor="let ts of tsList"  class="form-group" [ngClass]="{ 'has-error': f.submitted && !tsList.valid }">
+            <td contentEditable="false" [textContent]="ts.tsDate" (input)="ts.tsDate=$event.target.textContent">{{ts.tsDate}}</td>
+            <td contenteditable="true" [textContent]="ts.wbsCode" (input)="ts.wbsCode = $event.target.textContent"> {{ts.wbsCode}}</td>
+            <td><input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength = "3" 
+              class="form-control" id="regularHrs" name="regularHrs" [(ngModel)]="ts.regularHrs" #regularHrs="ngModel" required />            
+            </td>
+            <td><input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength = "3" 
+              class="form-control" id="overTimeHrs" name="overTimeHrs" [(ngModel)]="ts.overTimeHrs" #overTimeHrs="ngModel" required /> 
+            </td>
+            <td contenteditable="false"> {{ts.regularHrs*1+ts.overTimeHrs*1}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+           <!-- <td (input)="getSum($event)"></td>-->
+            <td></td>
+          </tr>
+        </tbody>
+      </table>   
+  </form>
+
+<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="saveTimesheetDetails()">Save</button>
+<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="saveTimesheetDetails()">Submit</button>
+
+</html>
+
+<!--
+    <li *ngFor="let o of obj_keys">
+            <input name="ts" id="i" [(ngModel)]="ts.regularHrs" />
+
+        <td><input type="number" max="8" min='0' (keypress)="onlyNumberKey($event)" class="form-control" id="regularHrs" name="regularHrs" [(ngModel)]="ts.regularHrs" #regularHrs="ngModel"
+              required /> </td></li>
+  <div *ngIf="regularHrs.errors && form-timesheet.submitted" [ngClass] = "'error'"> 
+                <div *ngIf="regularHrs.errors.required"> 
+              Enter your number.
+          </div>			   
+                <div *ngIf="regularHrs.errors.customMax"> 
+              Number must be between 0 and 8.
+          </div>	
+              </div>
+
+
+         <tr *ngFor="let ts of tsList">
+      <td contentEditable="false" [textContent]="ts.tsDate" (input)="ts.tsDate=$event.target.textContent">{{ts.tsDate}}</td>
+      <td contenteditable="true" [textContent]="ts.wbsCode" (input)="ts.wbsCode = $event.target.textContent"> {{ts.wbsCode}}</td>
+      <td contenteditable="true" [textContent]="ts.regularHrs" (input)="ts.regularHrs = $event.target.textContent">{{ts.regularHrs}}</td>
+      <td contenteditable="true"  [textContent]="ts.overTimeHrs" (input)="ts.overTimeHrs = $event.target.textContent">{{ts.overTimeHrs}}</td>
+      <td contenteditable="false"> {{ts.regularHrs*1+ts.overTimeHrs*1}}</td>
+    </tr>
+ -->

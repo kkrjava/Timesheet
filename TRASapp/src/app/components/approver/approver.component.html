@@ -1,0 +1,19 @@
+<div class="container">
+  <h3>{{message}}</h3>
+  
+
+  <form name="form-approver" (ngSubmit)="f.form.valid " #f="ngForm" novalidate>
+   
+      <button [routerLink]="['/home']" class="btn btn-lg btn-primary btn-block btn-signin" type="button">Home</button><br>
+
+      <label for="username">EmpName:</label><br>
+
+        <label for="status">Status: </label> <span><br>
+        <button [routerLink]="['/timesheet']" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Review</button>
+      </span>
+    
+    
+  </form>
+
+</div>
+  <!-- /container -->
